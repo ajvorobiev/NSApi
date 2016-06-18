@@ -1,0 +1,6 @@
+﻿{
+  "ApiUsername": "you@example.com",
+  "ApiPassword": "d7ws_fDwWN8s2dIWe5AKGSre1R1FweO0FAui4ByzhqOIjHH_lIkdg",
+  "ApiBaseUrl": "http://webservices.ns.nl",
+  "ApiStationsService": "ns-api-stations-v2"
+}
