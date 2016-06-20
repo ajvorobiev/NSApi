@@ -15,5 +15,14 @@
 
             Assert.AreEqual(622, stations.Count);
         }
+
+        [Test]
+        public void VerifyGetStationsByNameWorks()
+        {
+            var stations = NSApi.GetStationsByName("Delft");
+            Assert.IsNotEmpty(stations);
+
+            Assert.AreEqual(3, stations.Count);
+        }
     }
 }

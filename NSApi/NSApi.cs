@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using NSApiForge.Entities;
 
@@ -14,11 +15,22 @@
     /// </summary>
     public static class NSApi
     {
-       
         /// <summary>
-        /// Gets full response of the stations API.
+        /// Gets the list of stations by name.
+        /// </summary>
+        /// <param name="name">The name to searc by.</param>
+        /// <returns>The list of stations.</returns>
+        public static List<Station> GetStationsByName(string name)
+        {
+            var allStations = GetStations();
+            return allStations.Where(s => s.Namen.Kort.ToLower().Contains(name.ToLower()) || s.Namen.Middel.ToLower().Contains(name.ToLower()) || s.Namen.Lang.ToLower().Contains(name.ToLower())).ToList();
+        } 
+
+        /// <summary>
+        /// Gets deserialized response of the stations API.
         /// </summary>
         /// <returns>The full response of the stations API.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
         public static List<Station> GetStations()
         {
             var client = CreateNSApiClient();
@@ -27,6 +39,27 @@
             CheckResponseForErrors(response);
 
             return DeserializeXml<List<Station>>(response);
+        }
+
+        /// <summary>
+        /// Gets deserialized response of the departures API.
+        /// </summary>
+        /// <returns>The deserialized response of the departures API.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
+        public static ActueleVertrekTijden GetDepartureTimes(string station)
+        {
+            if (string.IsNullOrEmpty(station))
+            {
+                throw new ArgumentNullException("station");
+            }
+
+            var client = CreateNSApiClient();
+            var response = client.Execute(CreateDepartureTimeRestRequest(station));
+
+            CheckResponseForErrors(response);
+
+            return DeserializeXml<ActueleVertrekTijden>(response);
         }
 
         /// <summary>
@@ -55,9 +88,25 @@
             }
         }
 
+        /// <summary>
+        /// Creates the REST request to query all stations.
+        /// </summary>
+        /// <returns>The REST request for a stations query.</returns>
         private static RestRequest CreateStationRestRequest()
         {
             return new RestRequest(SettingsManager.Instance.Settings.ApiStationsService, Method.GET);
+        }
+
+        /// <summary>
+        /// Creates the REST request to query departure times of a station.
+        /// </summary>
+        /// <returns>The REST request for a station departure times.</returns>
+        private static RestRequest CreateDepartureTimeRestRequest(string station)
+        {
+            var request = new RestRequest(string.Format("{0}?station={{station}}",SettingsManager.Instance.Settings.ApiDepartureTimesService), Method.GET);
+            request.AddParameter("station", station, ParameterType.UrlSegment);
+
+            return request;
         }
 
         /// <summary>
