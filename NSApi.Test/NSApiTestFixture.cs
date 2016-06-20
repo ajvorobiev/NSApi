@@ -24,5 +24,12 @@
 
             Assert.AreEqual(3, stations.Count);
         }
+
+        [Test]
+        public void VerifyGetDepartureTimes()
+        {
+            var times = NSApi.GetDepartureTimes("Delft");
+            Assert.IsNotNull(times);
+        }
     }
 }

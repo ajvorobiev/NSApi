@@ -47,7 +47,7 @@
         /// <returns>The deserialized response of the departures API.</returns>
         /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
-        public static ActueleVertrekTijden GetDepartureTimes(string station)
+        public static DepartureTimes GetDepartureTimes(string station)
         {
             if (string.IsNullOrEmpty(station))
             {
@@ -59,7 +59,7 @@
 
             CheckResponseForErrors(response);
 
-            return DeserializeXml<ActueleVertrekTijden>(response);
+            return DeserializeXml<DepartureTimes>(response);
         }
 
         /// <summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents station names
     /// </summary>
-    public class Namen
+    public class StationName
     {
         /// <summary>
         /// Gets or sets the short name.

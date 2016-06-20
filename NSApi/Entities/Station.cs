@@ -20,7 +20,7 @@
         /// <summary>
         /// Gets or sets the names of the station.
         /// </summary>
-        public Namen Namen { get; set; }
+        public StationName Namen { get; set; }
 
         /// <summary>
         /// Gets or sets the country.
