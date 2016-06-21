@@ -1,12 +1,29 @@
 ﻿namespace NSApiForge.Test
 {
     using System;
+    using System.Diagnostics;
 
     using NUnit.Framework;
 
     [TestFixture]
     public class NSApiTestFixture
     {
+        private Stopwatch watch;
+
+        [SetUp]
+        public void SetUp()
+        {
+            this.watch = new Stopwatch();
+            this.watch.Start();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.watch.Stop();
+            Console.WriteLine("Query elapsed in " + this.watch.ElapsedMilliseconds + "ms");
+        }
+
         [Test]
         public void VerifyGetStationsWorks()
         {

@@ -49,6 +49,9 @@
         /// <summary>
         /// Gets or sets the synonyms.
         /// </summary>
+        /// <remarks>
+        /// DeserializeAs attribute does not work on this property for some reason.
+        /// </remarks>
         public List<string> Synoniemen { get; set; }
     }
 }
