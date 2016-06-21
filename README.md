@@ -1,6 +1,6 @@
 # NS API
 
-A C# wrapper for the Nationale Spoorweg API.
+A C# wrapper for the Nederlandse Spoorwegen API.
 
 ## Use
 
