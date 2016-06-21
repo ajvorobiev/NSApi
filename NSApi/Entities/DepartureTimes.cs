@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public abstract class DepartureTimes
+    public class DepartureTimes
     {
         /// <summary>
         /// Gets or sets the times.

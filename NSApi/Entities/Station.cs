@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using RestSharp.Deserializers;
+
     /// <summary>
     /// The Station entity
     /// </summary>
@@ -20,12 +22,14 @@
         /// <summary>
         /// Gets or sets the names of the station.
         /// </summary>
-        public StationName Namen { get; set; }
+        [DeserializeAs(Name = "Namen")]
+        public StationName Name { get; set; }
 
         /// <summary>
         /// Gets or sets the country.
         /// </summary>
-        public string Land { get; set; }
+        [DeserializeAs(Name = "Land")]
+        public string Country { get; set; }
 
         /// <summary>
         /// Gets or sets the UI code.

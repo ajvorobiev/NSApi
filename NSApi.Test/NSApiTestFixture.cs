@@ -8,7 +8,7 @@
     public class NSApiTestFixture
     {
         [Test]
-        public void VerifyStationsResponse()
+        public void VerifyGetStationsWorks()
         {
             var stations = NSApi.GetStations();
             Assert.IsNotEmpty(stations);
@@ -26,7 +26,7 @@
         }
 
         [Test]
-        public void VerifyGetDepartureTimes()
+        public void VerifyGetDepartureTimesWorks()
         {
             var times = NSApi.GetDepartureTimes("Delft");
             Assert.IsNotNull(times);

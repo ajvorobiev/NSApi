@@ -1,5 +1,7 @@
 ﻿namespace NSApiForge.Entities
 {
+    using RestSharp.Deserializers;
+
     /// <summary>
     /// Represents station names
     /// </summary>
@@ -8,16 +10,19 @@
         /// <summary>
         /// Gets or sets the short name.
         /// </summary>
-        public string Kort { get; set; }
+        [DeserializeAs(Name = "Kort")]
+        public string Short { get; set; }
 
         /// <summary>
         /// Gets or sets the medium length name.
         /// </summary>
-        public string Middel { get; set; }
+        [DeserializeAs(Name = "Middel")]
+        public string Medium { get; set; }
 
         /// <summary>
         /// Gets or sets the long name.
         /// </summary>
-        public string Lang { get; set; }
+        [DeserializeAs(Name = "Lang")]
+        public string Long { get; set; }
     }
 }

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\DepartureTimes.cs" />
+    <Compile Include="Entities\Platform.cs" />
     <Compile Include="Entities\StationName.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\StationType.cs" />

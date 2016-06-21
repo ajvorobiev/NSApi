@@ -23,7 +23,7 @@
         public static List<Station> GetStationsByName(string name)
         {
             var allStations = GetStations();
-            return allStations.Where(s => s.Namen.Kort.ToLower().Contains(name.ToLower()) || s.Namen.Middel.ToLower().Contains(name.ToLower()) || s.Namen.Lang.ToLower().Contains(name.ToLower())).ToList();
+            return allStations.Where(s => s.Name.Short.ToLower().Contains(name.ToLower()) || s.Name.Medium.ToLower().Contains(name.ToLower()) || s.Name.Long.ToLower().Contains(name.ToLower())).ToList();
         } 
 
         /// <summary>
