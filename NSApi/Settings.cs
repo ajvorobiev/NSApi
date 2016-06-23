@@ -29,5 +29,10 @@
         /// Gets or sets the API route to departure times service.
         /// </summary>
         public string ApiDepartureTimesService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the API route to disruption service.
+        /// </summary>
+        public string ApiDisruptionService { get; set; }
     }
 }

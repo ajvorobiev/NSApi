@@ -47,7 +47,7 @@
         /// <returns>The deserialized response of the departures API.</returns>
         /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
-        public static DepartureTimes GetDepartureTimes(string station)
+        public static List<DepartingTrain> GetDepartureTimes(string station)
         {
             if (string.IsNullOrEmpty(station))
             {
@@ -59,7 +59,52 @@
 
             CheckResponseForErrors(response);
 
-            return DeserializeXml<DepartureTimes>(response);
+            var depTimes = DeserializeXml<List<DepartingTrain>>(response);
+
+            return depTimes;
+        }
+
+        /// <summary>
+        /// Gets deserialized response of the disruptions API.
+        /// </summary>
+        /// <returns>The deserialized response of the disruptions API.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
+        public static Storingen GetDisruptions(string station, bool actual = true, bool unplanned = true)
+        {
+            if (string.IsNullOrEmpty(station))
+            {
+                throw new ArgumentNullException("station");
+            }
+
+            var client = CreateNSApiClient();
+            var response = client.Execute(CreateDisruptionRestRequest(station, actual, unplanned));
+
+            CheckResponseForErrors(response);
+
+            var disruptions = DeserializeXml<Storingen>(response);
+
+            return disruptions;
+        }
+
+        /// <summary>
+        /// Gets deserialized response of the departures API.
+        /// </summary>
+        /// <returns>The deserialized response of the departures API filtered on destination.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
+        public static List<DepartingTrain> GetDepartureTimesByDestination(string station, List<string> destinations)
+        {
+            var allDepartures = GetDepartureTimes(station);
+
+            var result = new List<DepartingTrain>();
+
+            foreach (var destination in destinations)
+            {
+                result.AddRange(allDepartures.Where(d => d.Destination.ToLower().Contains(destination.ToLower())).ToList());
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -105,6 +150,20 @@
         {
             var request = new RestRequest(string.Format("{0}?station={{station}}",SettingsManager.Instance.Settings.ApiDepartureTimesService), Method.GET);
             request.AddParameter("station", station, ParameterType.UrlSegment);
+
+            return request;
+        }
+
+        /// <summary>
+        /// Creates the REST request to query disruptions of a station.
+        /// </summary>
+        /// <returns>The REST request for a station departure times.</returns>
+        private static RestRequest CreateDisruptionRestRequest(string station, bool actual, bool unplanned)
+        {
+            var request = new RestRequest(string.Format("{0}?station={{station}}&actual={{actual}}&unplanned={{unplanned}}", SettingsManager.Instance.Settings.ApiDisruptionService), Method.GET);
+            request.AddParameter("station", station, ParameterType.UrlSegment);
+            request.AddParameter("actual", actual.ToString().ToLower(), ParameterType.UrlSegment);
+            request.AddParameter("unplanned", unplanned.ToString().ToLower(), ParameterType.UrlSegment);
 
             return request;
         }

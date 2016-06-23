@@ -1,6 +1,7 @@
 ﻿namespace NSApiForge.Test
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
 
     using NUnit.Framework;
@@ -46,7 +47,23 @@
         public void VerifyGetDepartureTimesWorks()
         {
             var times = NSApi.GetDepartureTimes("Delft");
+            Assert.IsNotEmpty(times);
+        }
+
+        [Test]
+        public void VerifyGetDisruptionsWorks()
+        {
+            var times = NSApi.GetDisruptions("amsterdam");
             Assert.IsNotNull(times);
+            Assert.IsNotNull(times.Gepland);
+            Assert.IsNotNull(times.Ongepland);
+        }
+
+        [Test]
+        public void VerifyGetDepartureTimesByDestinationWorks()
+        {
+            var times = NSApi.GetDepartureTimesByDestination("Delft", new List<string> {"Dordrecht", "Vlissingen"});
+            Assert.IsNotEmpty(times);
         }
     }
 }

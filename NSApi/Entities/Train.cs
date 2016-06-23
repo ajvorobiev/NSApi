@@ -7,7 +7,8 @@
     /// <summary>
     /// Describes a departing train.
     /// </summary>
-    public class Train
+    [DeserializeAs(Name = "VertrekkendeTrein")]
+    public class DepartingTrain
     {
         /// <summary>
         /// Gets or sets the number of the ride.
