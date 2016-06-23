@@ -55,8 +55,8 @@
         {
             var times = NSApi.GetDisruptions("amsterdam");
             Assert.IsNotNull(times);
-            Assert.IsNotNull(times.Gepland);
-            Assert.IsNotNull(times.Ongepland);
+            Assert.IsNotNull(times.Planned);
+            Assert.IsNotNull(times.Unplanned);
         }
 
         [Test]

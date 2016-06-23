@@ -1,31 +1,43 @@
 ﻿namespace NSApiForge.Entities
 {
     using System.Collections.Generic;
-    using System.Xml.Serialization;
 
     using RestSharp.Deserializers;
 
-    [XmlRoot(ElementName = "Storingen")]
+    /// <summary>
+    /// A collection of disruptions.
+    /// </summary>
+    [DeserializeAs(Name = "Storingen")]
     public class DisruptionCollection
     {
-        [XmlElement(ElementName = "Ongepland")]
+        [DeserializeAs(Name= "Ongepland")]
         public UnplannedDisruptionCollection Unplanned { get; set; }
 
-        [XmlElement(ElementName = "Gepland")]
+        [DeserializeAs(Name = "Gepland")]
         public PlannedDisruptionCollection Planned { get; set; }
     }
 
-    [XmlRoot(ElementName = "Ongepland")]
+    /// <summary>
+    /// A collection of unplanned disruptions.
+    /// </summary>
+    [DeserializeAs(Name = "Ongepland")]
     public class UnplannedDisruptionCollection
     {
-        [XmlElement(ElementName = "Storing")]
-        public List<UnplannedDisruption> Unplanned { get; set; }
+        /// <summary>
+        /// Gets or sets the value. In this case the list of all unplanned disruptions.
+        /// </summary>
+        public List<UnplannedDisruption> Value { get; set; }
     }
 
-    [XmlRoot(ElementName = "Gepland")]
+    /// <summary>
+    /// A collection of planned disruptions.
+    /// </summary>
+    [DeserializeAs(Name = "Gepland")]
     public class PlannedDisruptionCollection
     {
-        [XmlElement(ElementName = "Storing")]
-        public List<PlannedDisruption> Unplanned { get; set; }
+        /// <summary>
+        /// Gets or sets the value. In this case the list of all planned disruptions.
+        /// </summary>
+        public List<PlannedDisruption> Value { get; set; }
     }
 }

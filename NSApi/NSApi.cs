@@ -70,7 +70,7 @@
         /// <returns>The deserialized response of the disruptions API.</returns>
         /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
-        public static Storingen GetDisruptions(string station, bool actual = true, bool unplanned = true)
+        public static DisruptionCollection GetDisruptions(string station, bool actual = true, bool unplanned = true)
         {
             if (string.IsNullOrEmpty(station))
             {
@@ -82,7 +82,7 @@
 
             CheckResponseForErrors(response);
 
-            var disruptions = DeserializeXml<Storingen>(response);
+            var disruptions = DeserializeXml<DisruptionCollection>(response);
 
             return disruptions;
         }

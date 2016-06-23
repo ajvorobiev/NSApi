@@ -57,7 +57,6 @@
     <Compile Include="Entities\Train.cs" />
     <Compile Include="Entities\PlannedDisruption.cs" />
     <Compile Include="Entities\UnplannedDisruption.cs" />
-    <Compile Include="Entities\xmlcopy.cs" />
     <Compile Include="NSApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />

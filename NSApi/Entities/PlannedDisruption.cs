@@ -28,6 +28,9 @@
         [DeserializeAs(Name = "Oorzaak")]
         public string Reason { get; set; }
 
+        /// <summary>
+        /// Gets or sets the delay.
+        /// </summary>
         [DeserializeAs(Name = "Vertraging")]
         public string Delay { get; set; }
         
