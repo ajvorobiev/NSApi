@@ -16,6 +16,43 @@
     public static class NSApi
     {
         /// <summary>
+        /// Gets the full station information by station name.
+        /// </summary>
+        /// <param name="name">The name of the station.</param>
+        /// <param name="destinations">The list of relevant destinations. If null, all destinations are considered.</param>
+        /// <returns>The station with disruptions and departure times.</returns>
+        /// <exception cref="System.ArgumentException">The station was not found.</exception>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        public static List<Station> GetFullStationInformationByName(string name, List<string> destinations = null)
+        {
+            var relevantStations = GetStationsByName(name);
+
+            if (!relevantStations.Any())
+            {
+                throw new ArgumentException("The station was not found.", name);
+            }
+
+            foreach (var relevantStation in relevantStations)
+            {
+                // get departure times
+                if (destinations == null || !destinations.Any())
+                {
+                    relevantStation.Departures = GetDepartureTimes(relevantStation);
+                }
+                else
+                {
+                    relevantStation.Departures = GetDepartureTimesByDestination(relevantStation, destinations);
+                }
+
+                // get disruptions
+                relevantStation.Disruptions = GetDisruptions(relevantStation);
+
+            }
+
+            return relevantStations;
+        } 
+
+        /// <summary>
         /// Gets the list of stations by name.
         /// </summary>
         /// <param name="name">The name to searc by.</param>
@@ -65,6 +102,17 @@
         }
 
         /// <summary>
+        /// Gets the departure times.
+        /// </summary>
+        /// <param name="station">The station.</param>
+        /// <returns>The list of departure times.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        public static List<DepartingTrain> GetDepartureTimes(Station station)
+        {
+            return GetDepartureTimes(station.Code);
+        }
+
+        /// <summary>
         /// Gets deserialized response of the disruptions API.
         /// </summary>
         /// <returns>The deserialized response of the disruptions API.</returns>
@@ -88,6 +136,17 @@
         }
 
         /// <summary>
+        /// Gets deserialized response of the disruptions API.
+        /// </summary>
+        /// <returns>The deserialized response of the disruptions API.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
+        public static DisruptionCollection GetDisruptions(Station station, bool actual = true, bool unplanned = true)
+        {
+            return GetDisruptions(station.Code, actual, unplanned);
+        }
+
+        /// <summary>
         /// Gets deserialized response of the departures API.
         /// </summary>
         /// <returns>The deserialized response of the departures API filtered on destination.</returns>
@@ -105,6 +164,17 @@
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets deserialized response of the departures API.
+        /// </summary>
+        /// <returns>The deserialized response of the departures API filtered on destination.</returns>
+        /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
+        public static List<DepartingTrain> GetDepartureTimesByDestination(Station station, List<string> destinations)
+        {
+            return GetDepartureTimesByDestination(station.Code, destinations);
         }
 
         /// <summary>

@@ -54,7 +54,7 @@
     <Compile Include="Entities\StationName.cs" />
     <Compile Include="Entities\Station.cs" />
     <Compile Include="Entities\StationType.cs" />
-    <Compile Include="Entities\Train.cs" />
+    <Compile Include="Entities\DepartingTrain.cs" />
     <Compile Include="Entities\PlannedDisruption.cs" />
     <Compile Include="Entities\UnplannedDisruption.cs" />
     <Compile Include="NSApi.cs" />

@@ -1,6 +1,7 @@
 ﻿namespace NSApiForge.Entities
 {
     using System.Collections.Generic;
+    using System.Xml.Serialization;
 
     using RestSharp.Deserializers;
 
@@ -53,5 +54,17 @@
         /// DeserializeAs attribute does not work on this property for some reason.
         /// </remarks>
         public List<string> Synoniemen { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disruptions.
+        /// </summary>
+        [XmlIgnore]
+        public DisruptionCollection Disruptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the departures.
+        /// </summary>
+        [XmlIgnore]
+        public List<DepartingTrain> Departures { get; set; } 
     }
 }

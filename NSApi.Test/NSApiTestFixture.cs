@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
 
     using NUnit.Framework;
 
@@ -64,6 +65,22 @@
         {
             var times = NSApi.GetDepartureTimesByDestination("Delft", new List<string> {"Dordrecht", "Vlissingen"});
             Assert.IsNotEmpty(times);
+        }
+
+        [Test]
+        public void VerifyGetFullStationInfoWorks()
+        {
+            var stations = NSApi.GetFullStationInformationByName(
+                "Delft",
+                new List<string> { "Dordrecht", "Vlissingen" });
+
+            Assert.IsNotEmpty(stations);
+
+            var firstStation = stations.First();
+
+            Assert.IsNotNull(firstStation.Departures);
+            Assert.IsNotNull(firstStation.Disruptions);
+
         }
     }
 }
