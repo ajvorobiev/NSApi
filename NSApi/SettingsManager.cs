@@ -1,6 +1,7 @@
 ﻿namespace NSApiForge
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
 
@@ -73,6 +74,7 @@
         /// <summary>
         /// Loads the settings.
         /// </summary>
+        [ExcludeFromCodeCoverage]
         private void LoadSettings()
         {
             if (!File.Exists(this.FullPathToSettings))

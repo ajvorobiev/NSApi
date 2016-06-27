@@ -42,6 +42,8 @@
             Assert.IsNotEmpty(stations);
 
             Assert.AreEqual(3, stations.Count);
+
+            Assert.Throws<ArgumentNullException>(() => NSApi.GetStationsByName(string.Empty));
         }
 
         [Test]
@@ -49,6 +51,8 @@
         {
             var times = NSApi.GetDepartureTimes("Delft");
             Assert.IsNotEmpty(times);
+
+            Assert.Throws<ArgumentNullException>(() => NSApi.GetDepartureTimes(string.Empty));
         }
 
         [Test]
@@ -58,6 +62,8 @@
             Assert.IsNotNull(times);
             Assert.IsNotNull(times.Planned);
             Assert.IsNotNull(times.Unplanned);
+
+            Assert.Throws<ArgumentNullException>(() => NSApi.GetDisruptions(string.Empty));
         }
 
         [Test]
@@ -65,6 +71,8 @@
         {
             var times = NSApi.GetDepartureTimesByDestination("Delft", new List<string> {"Dordrecht", "Vlissingen"});
             Assert.IsNotEmpty(times);
+
+            Assert.Throws<ArgumentNullException>(() => NSApi.GetDepartureTimesByDestination(string.Empty, null));
         }
 
         [Test]
@@ -80,6 +88,18 @@
 
             Assert.IsNotNull(firstStation.Departures);
             Assert.IsNotNull(firstStation.Disruptions);
+
+            Assert.Throws<ArgumentNullException>(() => NSApi.GetFullStationInformationByName(string.Empty));
+
+            var stations2 = NSApi.GetFullStationInformationByName(
+                "Delft", null);
+
+            Assert.IsNotEmpty(stations2);
+
+            var firstStation2 = stations.First();
+
+            Assert.IsNotNull(firstStation2.Departures);
+            Assert.IsNotNull(firstStation2.Disruptions);
 
         }
     }

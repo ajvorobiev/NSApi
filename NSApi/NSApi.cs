@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using NSApiForge.Entities;
@@ -26,11 +27,6 @@
         public static List<Station> GetFullStationInformationByName(string name, List<string> destinations = null)
         {
             var relevantStations = GetStationsByName(name);
-
-            if (!relevantStations.Any())
-            {
-                throw new ArgumentException("The station was not found.", name);
-            }
 
             foreach (var relevantStation in relevantStations)
             {
@@ -59,6 +55,11 @@
         /// <returns>The list of stations.</returns>
         public static List<Station> GetStationsByName(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
+
             var allStations = GetStations();
             return allStations.Where(s => s.Name.Short.ToLower().Contains(name.ToLower()) || s.Name.Medium.ToLower().Contains(name.ToLower()) || s.Name.Long.ToLower().Contains(name.ToLower())).ToList();
         } 
@@ -154,6 +155,11 @@
         /// <exception cref="ArgumentNullException"><paramref name="station"/> is <see langword="null" />.</exception>
         public static List<DepartingTrain> GetDepartureTimesByDestination(string station, List<string> destinations)
         {
+            if (string.IsNullOrEmpty(station))
+            {
+                throw new ArgumentNullException("station");
+            }
+
             var allDepartures = GetDepartureTimes(station);
 
             var result = new List<DepartingTrain>();
@@ -194,6 +200,7 @@
         /// </summary>
         /// <param name="response">The response.</param>
         /// <exception cref="ApplicationException">The exception thrown in case the response contains errors.</exception>
+        [ExcludeFromCodeCoverage]
         private static void CheckResponseForErrors(IRestResponse response)
         {
             if (response.ErrorException != null)
